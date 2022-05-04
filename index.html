@@ -55,7 +55,7 @@
         }
 
         .pokemon {
-            width: 55%;
+            /* min-width: 55%; */
             margin-top: 30px;
             position: relative;
             display: grid;
@@ -144,6 +144,7 @@
             -webkit-box-shadow: 3px 3px 29px 10px rgb(224, 175, 51);
             box-shadow: 3px 3px 29px 10px rgb(224, 175, 51);
         }
+
         .normal {
             margin-top: 18px;
             width: 250px;
@@ -162,16 +163,67 @@
             background-color: rgb(253, 70, 70);
         }
 
-        .made{
+        .made {
             padding-top: 10px;
         }
 
-        .made a{
+        .made a {
             color: whitesmoke;
             font-weight: 400;
             text-decoration: dashed;
         }
 
+        @media only screen and (max-width: 600px) {
+            body {
+                display: flex;
+                overflow: auto;
+            }
+
+            .pokemon {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 10px 30px;
+            }
+
+            .shiny:hover {
+                background-color: none;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+
+            .normal:hover {
+                background-color: none
+            }
+
+            .made {
+                padding: 10px 0px;
+            }
+        }
+
+        @media only screen and (max-width: 400px) {
+            body {
+                display: flex;
+                overflow: auto;
+            }
+
+            .pokemon {
+                padding: 10px 5px;
+            }
+
+            .shiny:hover {
+                background-color: none;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+
+            .normal:hover {
+                background-color: none
+            }
+
+            .made {
+                padding: 10px 0px;
+            }
+        }
     </style>
 </head>
 
