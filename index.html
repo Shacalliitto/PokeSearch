@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeSearch</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            align-items: center;
+            font-family: sans-serif;
+            background-color: #333;
+            color: #fff;
+            flex-direction: column;
+            background: url('https://raw.githubusercontent.com/kkfuri/dailymon/main/public/body_bg.png');
+            background-size: cover;
+            cursor: url(./cursor.cur), auto;
+        }
+
+        .search {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div input {
+            min-width: 350px;
+            max-width: 600px;
+            border: none;
+            height: 40px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 22px;
+        }
+
+        button {
+            margin-top: 18px;
+            width: 250px;
+            font-size: 22px;
+            padding: 10px 0px;
+            background-color: 10;
+            border: none;
+            transition: 0.3s;
+            border-radius: 8px;
+        }
+
+        button:hover {
+            cursor: url(./cursor.cur), auto;
+            background-color: rgb(253, 70, 70);
+        }
+
+        .pokemon {
+            width: 55%;
+            margin-top: 30px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 10px 30px;
+            background-color: rgba(0, 0, 0, 0.39);
+            padding: 20px 15px;
+            border-radius: 36px;
+            border: 2px solid whitesmoke;
+        }
+
+        .infos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .poke {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .basicInfos {
+            display: flex;
+            width: 370px;
+            color: white;
+            justify-content: space-evenly;
+            font-size: 20px;
+            font-weight: 400;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        .row {
+            display: flex;
+            margin-left: 50px;
+            align-items: center;
+        }
+
+        .technical {
+            font-size: 22px;
+            text-transform: capitalize;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        #name {
+            text-transform: capitalize;
+        }
+
+        .gif {
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80px;
+        }
+
+        .gif-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+
+        .shiny {
+            margin-top: 18px;
+            width: 250px;
+            font-size: 22px;
+            padding: 5px 8px;
+            background-color: rgb(233, 233, 233);
+            border: none;
+            transition: 0.3s;
+            text-align: center;
+            color: black;
+            border-radius: 8px;
+        }
+
+        .shiny:hover {
+            background-color: rgb(224, 175, 51);
+            -webkit-box-shadow: 3px 3px 29px 10px rgb(224, 175, 51);
+            box-shadow: 3px 3px 29px 10px rgb(224, 175, 51);
+        }
+        .normal {
+            margin-top: 18px;
+            width: 250px;
+            font-size: 22px;
+            padding: 5px 8px;
+            background-color: rgb(233, 233, 233);
+            border: none;
+            transition: 0.3s;
+            text-align: center;
+            color: black;
+            border-radius: 8px;
+        }
+
+        .normal:hover {
+            cursor: url(./cursor.cur), auto;
+            background-color: rgb(253, 70, 70);
+        }
+
+        .made{
+            padding-top: 10px;
+        }
+
+        .made a{
+            color: whitesmoke;
+            font-weight: 400;
+            text-decoration: dashed;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>PokeSearch</h1>
+    <div class="gif-box">
+        <img class="gif" id="gif">
+    </div>
+    <div class="search">
+        <input id="pesquisa" onchange="fetchPokemon()" placeholder="Procure pelo nome ou id" autocomplete="true">
+        <button onclick="fetchPokemon()">Pesquisar!</button>
+        <span id="alerta"></span>
+    </div>
+    <div class="pokemon">
+        <div class="poke">
+            <div class="infos">
+                <img id="img" width="320px">
+                <h2 id="name"></h2>
+                <p id="id"></p>
+            </div>
+            <div class="basicInfos">
+                <p id="height"></p>
+                <p id="weight"></p>
+            </div>
+            <div class="">
+                <a class="normal" onclick="normal()">Normal</a>
+                <a class="shiny" onclick="shiny()">⭐ Shiny ⭐</a>
+            </div>
+        </div>
+        <div class="technical">
+            <div class="row">
+                <h3 id="hp"></h3>
+            </div>
+            <div class="row">
+                <h3 id="attack"></h3>
+            </div>
+            <div class="row">
+                <h3 id="defense"></h3>
+            </div>
+            <div class="row">
+                <h3 id="special-attack"></h3>
+            </div>
+            <div class="row">
+                <h3 id="special-defense"></h3>
+            </div>
+            <div class="row">
+                <h3 id="speed"></h3>
+            </div>
+        </div>
+    </div>
+    <p class="made">Made by 👉🏽 <a href="https://github.com/Shacalliitto">Shacall</a> with love 🤍</p>
+</body>
+<script>
+
+    function start() {
+        const poke = document.getElementById('pesquisa').value = Math.floor(Math.random() * 898)
+        const url = `https://pokeapi.co/api/v2/pokemon/${poke}`
+        fetch(url)
+            .then(response => response.json())
+            .then(pokemon => {
+                document.getElementById('name').innerHTML = pokemon.name
+                document.getElementById('id').innerHTML = "id: #" + pokemon.id
+                document.getElementById('height').innerHTML = "Altura: " + pokemon.height * 10 + "cm"
+                document.getElementById('weight').innerHTML = "Peso: " + pokemon.weight / 10 + "Kg"
+                document.getElementById('img').setAttribute('src', pokemon.sprites.other.home.front_default);
+                document.getElementById('gif').setAttribute('src', pokemon.sprites.versions['generation-v']['black-white'].animated.front_default);
+                document.getElementById('alerta').innerHTML = ""
+                document.getElementById('pesquisa').value = ''
+                if (document.getElementById('name') != pokemon.name) {
+                    document.title = 'Você está vendo: ' + pokemon.name
+                }
+                document.getElementById('hp').innerHTML = pokemon.stats[0].stat.name + ": " + pokemon.stats[0].base_stat
+                document.getElementById('attack').innerHTML = pokemon.stats[1].stat.name + ": " + pokemon.stats[1].base_stat
+                document.getElementById('defense').innerHTML = pokemon.stats[2].stat.name + ": " + pokemon.stats[2].base_stat
+                document.getElementById('special-attack').innerHTML = pokemon.stats[3].stat.name + ": " + pokemon.stats[3].base_stat
+                document.getElementById('special-defense').innerHTML = pokemon.stats[4].stat.name + ": " + pokemon.stats[4].base_stat
+                document.getElementById('speed').innerHTML = pokemon.stats[5].stat.name + ": " + pokemon.stats[5].base_stat
+            })
+            .catch(function (error) {
+                document.getElementById('pesquisa').value = ''
+                console.log(error)
+                document.title = 'PokeSearch'
+            })
+    }
+
+    function normal() {
+        const poke = document.getElementById('name').innerHTML
+        const url = `https://pokeapi.co/api/v2/pokemon/${poke}`
+        fetch(url)
+            .then(response => response.json())
+            .then(pokemon => {
+                document.getElementById('img').setAttribute('src', pokemon.sprites.other.home.front_default);
+                document.getElementById('gif').setAttribute('src', pokemon.sprites.versions['generation-v']['black-white'].animated.front_default);
+            })
+    }
+
+    function shiny() {
+        const poke = document.getElementById('name').innerHTML
+        const url = `https://pokeapi.co/api/v2/pokemon/${poke}`
+        fetch(url)
+            .then(response => response.json())
+            .then(pokemon => {
+                document.getElementById('img').setAttribute('src', pokemon.sprites.other.home.front_shiny);
+                document.getElementById('gif').setAttribute('src', pokemon.sprites.versions['generation-v']['black-white'].animated.front_shiny);
+            })
+    }
+
+    const fetchPokemon = () => {
+
+        const poke = document.getElementById('pesquisa').value.toLowerCase()
+        const url = `https://pokeapi.co/api/v2/pokemon/${poke}`
+        if (poke != '') {
+            fetch(url)
+                .then(response => response.json())
+                .then(pokemon => {
+                    document.getElementById('name').innerHTML = pokemon.name
+                    document.getElementById('id').innerHTML = "id: #" + pokemon.id
+                    document.getElementById('height').innerHTML = "Altura: " + pokemon.height * 10 + "cm"
+                    document.getElementById('weight').innerHTML = "Peso: " + pokemon.weight / 10 + "Kg"
+                    document.getElementById('img').setAttribute('src', pokemon.sprites.other.home.front_default);
+                    document.getElementById('gif').setAttribute('src', pokemon.sprites.versions['generation-v']['black-white'].animated.front_default);
+                    document.getElementById('alerta').innerHTML = ""
+                    document.getElementById('pesquisa').value = ''
+                    if (document.getElementById('name') != pokemon.name) {
+                        document.title = 'Você está vendo: ' + pokemon.name
+                    }
+                    document.getElementById('hp').innerHTML = pokemon.stats[0].stat.name + ": " + pokemon.stats[0].base_stat
+                    document.getElementById('attack').innerHTML = pokemon.stats[1].stat.name + ": " + pokemon.stats[1].base_stat
+                    document.getElementById('defense').innerHTML = pokemon.stats[2].stat.name + ": " + pokemon.stats[2].base_stat
+                    document.getElementById('special-attack').innerHTML = pokemon.stats[3].stat.name + ": " + pokemon.stats[3].base_stat
+                    document.getElementById('special-defense').innerHTML = pokemon.stats[4].stat.name + ": " + pokemon.stats[4].base_stat
+                    document.getElementById('speed').innerHTML = pokemon.stats[5].stat.name + ": " + pokemon.stats[5].base_stat
+                })
+                .catch(function (error) {
+                    document.getElementById('alerta').innerHTML = "Pokemon inexistente, por favor, digite um pokemon valido"
+                    document.getElementById('pesquisa').value = ''
+                    console.log(error)
+                    document.title = 'PokeSearch'
+                })
+        }
+    }
+    start()
+</script>
